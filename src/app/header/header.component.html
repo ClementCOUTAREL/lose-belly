@@ -1,0 +1,10 @@
+<header class="bg-blue-300 py-3 px-5 flex flex-row justify-between">
+  <h1 class=" text-lg uppercase font-bold"><a routerLink="/dashboard" class="cursor-pointer">Lose Belly</a></h1>
+  <nav>
+    <ul class="flex flex-row justify-between gap-2">
+      <li *ngIf="isLoggedIn"><a routerLink="/dashboard">Dashboard</a></li>
+      <li *ngIf="!isLoggedIn"><a routerLink="/auth" >Login</a></li>
+      <li *ngIf="isLoggedIn"><button type="button" (click)="onLogout()">Logout</button></li>
+    </ul>
+  </nav>
+</header>

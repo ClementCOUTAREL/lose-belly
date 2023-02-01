@@ -1,0 +1,21 @@
+<div class="flex flex-col items-center justify-center py-4">
+  <div *ngIf="error" class="bg-red-400">
+    {{error}}
+  </div>
+  <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" class="flex flex-col gap-3">
+    <div class="flex flex-row justify-between">
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" ngModel required email>
+    </div>
+    <div class="flex flex-row justify-between">
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" ngModel required password>
+    </div>
+    <button type="submit" class="" >{{loginMode ? 'Login' : 'Signup' }}</button>
+    <button type="button" class="" (click)="onSwitch()">{{loginMode ? 'Switch to Signup' : 'Swith to Login'}}</button>
+  </form>
+  <div *ngIf="!error && loading">
+    <p class="text-lg">Processing ...</p>
+  </div>
+</div>
+
