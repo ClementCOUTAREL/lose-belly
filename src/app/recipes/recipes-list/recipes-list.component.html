@@ -1,0 +1,15 @@
+<form #recipesSearchForm="ngForm" (ngSubmit)="onSubmit(recipesSearchForm)">
+  <div>
+    <label for="query">Enter your research:</label>
+    <input type="text" name="query" id="query" ngModel>
+  </div>
+  <button>Search</button>
+</form>
+<ul *ngIf="recipes.length > 0">
+  <li *ngFor="let recipe of recipes;">
+    <app-recipe-item
+    [recipe] = "recipe"
+    [index] = "recipe.id"
+    ></app-recipe-item>
+  </li>
+</ul>

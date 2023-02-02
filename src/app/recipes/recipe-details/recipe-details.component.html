@@ -1,0 +1,26 @@
+<div>
+  <div *ngIf="!loading && error" class="bg-red-400">
+    {{error}}
+  </div>
+  <div *ngIf="recipe && !loading">
+    <h2>{{recipe.title}}</h2>
+    <img src="{{recipe.image}}" alt="{{recipe.title}}">
+    <h3>Ingredients</h3>
+    <ul>
+      <li *ngFor="let ingredient of recipe.extendedIngredients; let i = index">
+        <p>{{ingredient.originalName}}</p>
+        <p>{{ingredient.measures.metric.amount}} {{ingredient.measures.metric.unitLong}}</p>
+      </li>
+    </ul>
+    <h3>Instructions</h3>
+    <ul>
+      <li *ngFor="let step of recipe.detailledInstructions" >
+       <ul>
+        <li *ngFor="let instruction of step.steps">
+          <p>{{instruction.number}} - {{instruction.step}}</p>
+        </li>
+       </ul>
+      </li>
+    </ul>
+  </div>
+</div>

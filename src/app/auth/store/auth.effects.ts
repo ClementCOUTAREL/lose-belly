@@ -8,6 +8,7 @@ import { User } from 'src/app/shared/models/user.model';
 import { AuthResponseData } from '../interfaces/AuthResponseData.interface';
 import { environment } from 'environments/environment';
 import * as AuthActions from './auth.actions';
+import { AuthService } from '../auth.service';
 
 @Injectable()
 export class AuthEffects {
@@ -64,16 +65,8 @@ export class AuthEffects {
       ofType(AuthActions.LOGIN_START),
       switchMap(
         (loginAction: { payload: { email: string; password: string } }) => {
-          return this.http
-            .post<AuthResponseData>(
-              'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' +
-                environment.firebaseAPIKey,
-              {
-                email: loginAction.payload.email,
-                password: loginAction.payload.password,
-                returnSecureToken: true,
-              }
-            )
+          return this.authService
+            .login(loginAction.payload.email, loginAction.payload.password)
             .pipe(
               map((response) => {
                 return this.handleSuccess(response);
@@ -119,16 +112,8 @@ export class AuthEffects {
       ofType(AuthActions.SIGNUP_START),
       switchMap(
         (loginAction: { payload: { email: string; password: string } }) => {
-          return this.http
-            .post<AuthResponseData>(
-              'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
-                environment.firebaseAPIKey,
-              {
-                email: loginAction.payload.email,
-                password: loginAction.payload.password,
-                returnSecureToken: true,
-              }
-            )
+          return this.authService
+            .signup(loginAction.payload.email, loginAction.payload.password)
             .pipe(
               map((response) => {
                 return this.handleSuccess(response);
@@ -168,6 +153,7 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 }
